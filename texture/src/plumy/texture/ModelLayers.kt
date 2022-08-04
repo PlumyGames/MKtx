@@ -24,13 +24,20 @@ class RawPixmapModelLayer(pixmap: Pixmap) : IModelLayer {
     }
 }
 
-class AtlasModelLayer(region: TextureRegion) : IModelLayer {
+class AtlasModelLayer(val region: TextureRegion) : IModelLayer {
+    val processors = ArrayList<ILayerProcessor>()
     override fun addProcess(processor: ILayerProcessor) {
-        TODO("Not yet implemented")
+        processors.add(processor)
     }
+
     override fun process(): ITexture {
-        TODO("Not yet implemented")
+        var cur = texture
+        for (processor in processors) {
+            val res = processor.process(cur)
+            cur = res
+        }
+        return cur
     }
-    override val texture: ITexture
-        get() = TODO("Not yet implemented")
+
+    override val texture: ITexture = AtlasRegionTexture(region)
 }
