@@ -2,8 +2,7 @@ package plumy.texture
 
 import arc.graphics.Pixmap
 import arc.graphics.Pixmaps
-import arc.graphics.TextureData
-import arc.graphics.g2d.TextureRegion
+import arc.graphics.g2d.PixmapRegion
 
 open class PixmapDelegateTexture(val pixmap: Pixmap) : ITexture {
     override fun toPixmap() = pixmap
@@ -28,21 +27,13 @@ class ProcessedTexture(pixmap: Pixmap) : PixmapDelegateTexture(pixmap) {
     override val disposable = true
 }
 
-class AtlasRegionTexture(val region: TextureRegion) : ITexture {
-    val data: TextureData = region.texture.textureData
-    var pixmap: Pixmap? = null
-    override fun init() {
-        pixmap = data.pixmap
-    }
-
+class PixmapRegionTexture(val region: PixmapRegion) : ITexture {
     override fun get(x: Int, y: Int): Int {
-        val pixmap = pixmap ?: throw UninitializedTextureException("$region in $this is not initialized.")
-        return pixmap[x + region.x, y + region.y]
+        return region[x, y]
     }
 
     override fun set(x: Int, y: Int, color: Int) {
-        val pixmap = pixmap ?: throw UninitializedTextureException("$region in $this is not initialized.")
-        pixmap[x + region.x, y + region.y] = color
+        throw UnsupportedOperationException()
     }
 
     override val width: Int
@@ -51,6 +42,6 @@ class AtlasRegionTexture(val region: TextureRegion) : ITexture {
         get() = region.height
 
     override fun toPixmap(): Pixmap {
-        return Pixmaps.crop(region.texture.textureData.pixmap, region.x, region.y, region.width, region.height)
+        return region.crop()
     }
 }

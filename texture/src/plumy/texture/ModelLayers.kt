@@ -1,8 +1,9 @@
 package plumy.texture
 
+import arc.Core
 import arc.files.Fi
 import arc.graphics.Pixmap
-import arc.graphics.g2d.TextureRegion
+import arc.graphics.g2d.PixmapRegion
 import java.io.File
 
 fun PixmapModelLayerForm(fi: Fi) = RawPixmapModelLayer(fi.toPixmap())
@@ -24,7 +25,9 @@ class RawPixmapModelLayer(pixmap: Pixmap) : IModelLayer {
     }
 }
 
-class AtlasModelLayer(val region: TextureRegion) : IModelLayer {
+fun PixmapRegionModelLayerFrom(name: String) = PixmapRegionModelLayer(Core.atlas.getPixmap(name))
+class PixmapRegionModelLayer(val region: PixmapRegion) : IModelLayer {
+    override val texture: ITexture = PixmapRegionTexture(region)
     val processors = ArrayList<ILayerProcessor>()
     override fun addProcess(processor: ILayerProcessor) {
         processors.add(processor)
@@ -38,6 +41,4 @@ class AtlasModelLayer(val region: TextureRegion) : IModelLayer {
         }
         return cur
     }
-
-    override val texture: ITexture = AtlasRegionTexture(region)
 }

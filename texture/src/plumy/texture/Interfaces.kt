@@ -4,7 +4,6 @@ import arc.graphics.Pixmap
 import java.io.Closeable
 
 interface ITexture : Closeable {
-    fun init() {}
     operator fun get(x: Int, y: Int): Int
     operator fun set(x: Int, y: Int, color: Int)
     val width: Int
@@ -42,17 +41,4 @@ interface IBakery {
 fun IBakery.bake(vararg layers: IModelLayer) = bake(layers.toList())
 interface IBakedModel {
     val texture: ITexture
-}
-
-class UninitializedTextureException : RuntimeException {
-    constructor() : super()
-    constructor(message: String) : super(message)
-    constructor(message: String, cause: Throwable) : super(message, cause)
-    constructor(cause: Throwable) : super(cause)
-    constructor(message: String, cause: Throwable, enableSuppression: Boolean, writableStackTrace: Boolean) : super(
-        message,
-        cause,
-        enableSuppression,
-        writableStackTrace
-    )
 }
