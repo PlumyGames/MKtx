@@ -10,6 +10,10 @@ class RawPixmapModelLayer(pixmap: Pixmap) : IModelLayer {
         processors.add(processor)
     }
 
+    override fun removeProcess(processor: ILayerProcessor) {
+        processors.remove(processor)
+    }
+
     override fun process(): ITexture {
         var cur = texture
         for (processor in processors) {
@@ -25,6 +29,10 @@ class PixmapRegionModelLayer(val region: PixmapRegion) : IModelLayer {
     val processors = ArrayList<ILayerProcessor>()
     override fun addProcess(processor: ILayerProcessor) {
         processors.add(processor)
+    }
+
+    override fun removeProcess(processor: ILayerProcessor) {
+        processors.remove(processor)
     }
 
     override fun process(): ITexture {

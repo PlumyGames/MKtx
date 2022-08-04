@@ -16,10 +16,13 @@ class TestIconGenerator {
     fun `gen icon`(): Pixmap {
         val maker = StackIconMaker(32, 32)
         val layers = listOf(
-            PixmapModelLayerForm(`base`) + PlainLayerProcessor(),
-            PixmapModelLayerForm(`patch`) +
-                    TintBlendLayerProcessor(Pal.accent.cpy().a(0.5f)) +
-                    MaskLayerProcessor(AndTextureMask(PixmapTextureFrom(`mask`)))
+            (PixmapModelLayerForm(`base`)) {
+                +PlainLayerProcessor()
+            },
+            (PixmapModelLayerForm(`patch`)) {
+                +TintBlendLayerProcessor(Pal.accent.cpy().a(0.5f))
+                +MaskLayerProcessor(AndTextureMask(PixmapTextureFrom(`mask`)))
+            }
         )
         val baked = maker.bake(layers)
         return baked.texture.toPixmap()

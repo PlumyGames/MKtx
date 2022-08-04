@@ -17,6 +17,7 @@ interface ITexture : Closeable {
 
 interface IModelLayer {
     fun addProcess(processor: ILayerProcessor)
+    fun removeProcess(processor: ILayerProcessor)
     fun process(): ITexture
     val texture: ITexture
 }
