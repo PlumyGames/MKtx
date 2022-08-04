@@ -1,42 +1,17 @@
 package plumy.texture
 
-import arc.graphics.Pixmap
-
-fun Pixmap.coverBy(cover: Pixmap) {
-    val width = this.width
-    val height = this.height
-    for (x in 0 until width) {
-        for (y in 0 until height) {
-            val c = Pixel(this[x, y])
-            val t = Pixel(cover[x, y])
-            val r = c.coverBy(t)
-            this[x, y] = r
-        }
-    }
-}
+import arc.graphics.Color
 
 fun ITexture.coverBy(cover: ITexture) {
     val width = this.width
     val height = this.height
+    val baseT = Color()
+    val coverT = Color()
     for (x in 0 until width) {
         for (y in 0 until height) {
-            val c = Pixel(this[x, y])
-            val t = Pixel(cover[x, y])
-            val r = c.coverBy(t)
-            this[x, y] = r
-        }
-    }
-}
-
-fun Pixmap.coverBy(cover: ITexture) {
-    val width = this.width
-    val height = this.height
-    for (x in 0 until width) {
-        for (y in 0 until height) {
-            val c = Pixel(this[x, y])
-            val t = Pixel(cover[x, y])
-            val r = c.coverBy(t)
-            this[x, y] = r
+            baseT.rgba8888(this[x, y])
+            coverT.rgba8888(cover[x, y])
+            this[x, y] = baseT.lerp(coverT.r, coverT.g, coverT.b, 1f, coverT.a).rgba8888()
         }
     }
 }

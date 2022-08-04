@@ -2,17 +2,17 @@ package plumy.texture
 
 import arc.graphics.Color
 import arc.graphics.Pixmap
-import plumy.texture.Pixel.Companion.blend
 import plumy.texture.Pixel.Companion.toPixel
 
 class PlainLayerProcessor : ILayerProcessor {
     override fun process(original: ITexture): ITexture = original
 }
 
-class TintLayerProcessor(
-    val color: Color,
+class TintBlendLayerProcessor(
+    val dye: Pixel,
 ) : ILayerProcessor {
-    val dye = color.toPixel()
+    constructor(color: Color) : this(color.toPixel())
+
     override fun process(original: ITexture): ITexture {
         val width = original.width
         val height = original.height
@@ -21,7 +21,7 @@ class TintLayerProcessor(
             for (y in 0 until height) {
                 val c = Pixel(original[x, y])
                 if (c.isVisible) {
-                    res[x, y] = blend(c, dye)
+                    res[x, y] = Pixel.blend(c, dye)
                 }
             }
         }
@@ -29,11 +29,10 @@ class TintLayerProcessor(
     }
 }
 
-
 class TintLerpLayerProcessor(
     val color: Color,
+    val progress: Float,
 ) : ILayerProcessor {
-    val dye = color.toPixel()
     override fun process(original: ITexture): ITexture {
         val width = original.width
         val height = original.height
@@ -43,9 +42,25 @@ class TintLerpLayerProcessor(
             for (y in 0 until height) {
                 cur.rgba8888(original[x, y])
                 if (cur.a != 0f) {
-                    cur.lerp(cur.r, cur.g, cur.b, 1f, color.a)
+                    cur.lerp(color, progress)
                     res[x, y] = cur.rgba8888()
                 }
+            }
+        }
+        return ProcessedTexture(res)
+    }
+}
+
+class MaskLayerProcessor(
+    val mask: IMask,
+) : ILayerProcessor {
+    override fun process(original: ITexture): ITexture {
+        val width = original.width
+        val height = original.height
+        val res = Pixmap(width, height)
+        for (x in 0 until width) {
+            for (y in 0 until height) {
+                mask.draw(base = res, x, y, original[x, y])
             }
         }
         return ProcessedTexture(res)

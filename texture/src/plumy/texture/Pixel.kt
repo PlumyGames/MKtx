@@ -30,6 +30,7 @@ value class Pixel(
     val bf get() = (rgba8888 and BLUE_MASK shr 8) / 255f
     val af get() = (rgba8888 and ALPHA_MASK) / 255f
     val hasAlpha get() = a != 0xFF
+    val isBlack get() = rgba8888 == 0x00_00_00_FF
     val isVisible get() = a != 0x00
     infix fun r(r: Int) = Pixel(r, g, b, a)
     infix fun g(g: Int) = Pixel(r, g, b, a)
@@ -64,10 +65,11 @@ value class Pixel(
         const val ALPHA_MASK = 0x000000ff
         */
         const val RED_MASK = -0x1000000
-        const val GREEN_MASK = 0x00ff0000
-        const val BLUE_MASK = 0x0000ff00
-        const val ALPHA_MASK = 0x000000ff
-        const val Empty = 0x00000000
+        const val GREEN_MASK = 0x00_FF_00_00
+        const val BLUE_MASK = 0x00_00_FF_00
+        const val RGB_MASK = RED_MASK or GREEN_MASK or BLUE_MASK
+        const val ALPHA_MASK = 0x00_00_00_FF
+        const val Empty = 0x00_00_00_00
         private val Int.to255 get() = if (this < 0) this + 255 else this
         fun blend(bk: Pixel, fg: Pixel): Pixel {
             val fga = fg.af

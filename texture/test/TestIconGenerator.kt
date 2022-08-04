@@ -12,11 +12,14 @@ class TestIconGenerator {
     val rootDir = File("test")
     val `base` = rootDir.resolve("base.png")
     val `patch` = rootDir.resolve("patch.png")
+    val `mask` = rootDir.resolve("mask.png")
     fun `gen icon`(): Pixmap {
         val maker = StackIconMaker(32, 32)
         val layers = listOf(
             PixmapModelLayerForm(`base`) + PlainLayerProcessor(),
-            PixmapModelLayerForm(`patch`) + TintLayerProcessor(Pal.accent.cpy().a(0.5f))
+            PixmapModelLayerForm(`patch`) +
+                    TintBlendLayerProcessor(Pal.accent.cpy().a(0.5f)) +
+                    MaskLayerProcessor(AndTextureMask(PixmapTextureFrom(`mask`)))
         )
         val baked = maker.bake(layers)
         return baked.texture.toPixmap()
@@ -30,6 +33,7 @@ class TestIconGenerator {
         val icon = `gen icon`()
         val output = File.createTempFile("test-generated-icon", ".png")
         Fi(output).writePng(icon)
+        println("Generated at ${output.absolutePath}")
     }
     @Test
     fun `test read buffered image form local file`() {

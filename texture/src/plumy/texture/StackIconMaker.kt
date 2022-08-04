@@ -8,12 +8,12 @@ class StackIconMaker(
     val height: Int,
 ) : IBakery {
     override fun bake(layers: List<IModelLayer>): IBakedModel {
-        val res = Pixmap(width, height)
+        val res = BakedTexture(Pixmap(width, height))
         for (layer in layers) {
             layer.process().use {
                 res.coverBy(it)
             }
         }
-        return Icon(BakedTexture(res))
+        return Icon(res)
     }
 }
