@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.liplum.mgpp") version "1.1.9"
+    id("io.github.liplum.mgpp") version "1.1.10"
 }
 buildscript {
     repositories {
@@ -40,5 +40,8 @@ mindustry {
     }
     server {
         mindustry official "v136.1"
+    }
+    deploy {
+        noFatJar
     }
 }
