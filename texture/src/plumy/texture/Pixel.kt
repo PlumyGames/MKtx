@@ -1,7 +1,6 @@
 package plumy.texture
 
 import arc.graphics.Color
-import arc.graphics.Pixmap
 
 @JvmInline
 value class Pixel(
@@ -80,8 +79,4 @@ value class Pixel(
 
         fun Color.toPixel() = Pixel(rgba8888())
     }
-}
-
-operator fun Pixmap.set(x: Int, y: Int, pixel: Pixel) {
-    this[x, y] = pixel.rgba8888
 }

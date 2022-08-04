@@ -11,22 +11,9 @@ class StackIconMaker(
         val res = Pixmap(width, height)
         for (layer in layers) {
             layer.process().use {
-                res.coverBy(it.pixels)
+                res.coverBy(it)
             }
         }
         return Icon(BakedTexture(res))
-    }
-}
-
-fun Pixmap.coverBy(cover: Pixmap) {
-    val width = this.width
-    val height = this.height
-    for (x in 0 until width) {
-        for (y in 0 until height) {
-            val c = Pixel(this[x, y])
-            val t = Pixel(cover[x, y])
-            val r = c.coverBy(t)
-            this[x, y] = r
-        }
     }
 }

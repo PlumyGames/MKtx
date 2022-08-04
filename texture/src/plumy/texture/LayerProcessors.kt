@@ -14,13 +14,12 @@ class TintLayerProcessor(
 ) : ILayerProcessor {
     val dye = color.toPixel()
     override fun process(original: ITexture): ITexture {
-        val raw = original.pixels
-        val width = raw.width
-        val height = raw.height
+        val width = original.width
+        val height = original.height
         val res = Pixmap(width, height)
         for (x in 0 until width) {
             for (y in 0 until height) {
-                val c = Pixel(raw[x, y])
+                val c = Pixel(original[x, y])
                 if (c.isVisible) {
                     res[x, y] = blend(c, dye)
                 }
@@ -36,14 +35,13 @@ class TintLerpLayerProcessor(
 ) : ILayerProcessor {
     val dye = color.toPixel()
     override fun process(original: ITexture): ITexture {
-        val raw = original.pixels
-        val width = raw.width
-        val height = raw.height
+        val width = original.width
+        val height = original.height
         val res = Pixmap(width, height)
         val cur = Color()
         for (x in 0 until width) {
             for (y in 0 until height) {
-                cur.rgba8888(raw[x, y])
+                cur.rgba8888(original[x, y])
                 if (cur.a != 0f) {
                     cur.lerp(cur.r, cur.g, cur.b, 1f, color.a)
                     res[x, y] = cur.rgba8888()

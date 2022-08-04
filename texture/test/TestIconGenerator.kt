@@ -19,7 +19,7 @@ class TestIconGenerator {
             PixmapModelLayerForm(`patch`) + TintLayerProcessor(Pal.accent.cpy().a(0.5f))
         )
         val baked = maker.bake(layers)
-        return baked.texture.pixels
+        return baked.texture.toPixmap()
     }
     @Test
     fun `test gen icon`() {

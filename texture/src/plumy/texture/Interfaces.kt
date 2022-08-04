@@ -1,18 +1,19 @@
 package plumy.texture
 
 import arc.graphics.Pixmap
-import arc.graphics.Texture
-import arc.graphics.g2d.TextureRegion
 import java.io.Closeable
 
 interface ITexture : Closeable {
-    val pixels: Pixmap
+    fun init() {}
+    operator fun get(x: Int, y: Int): Int
+    operator fun set(x: Int, y: Int, color: Int)
+    val width: Int
+    val height: Int
+    fun toPixmap(): Pixmap
     val disposable: Boolean
         get() = false
 
-    override fun close() {
-        if (disposable) pixels.dispose()
-    }
+    override fun close() {}
 }
 
 interface IModelLayer {
@@ -43,5 +44,15 @@ interface IBakedModel {
     val texture: ITexture
 }
 
-fun IBakedModel.toTexture() = Texture(texture.pixels)
-fun IBakedModel.toTextureRegion() = TextureRegion(toTexture())
+class UninitializedTextureException : RuntimeException {
+    constructor() : super()
+    constructor(message: String) : super(message)
+    constructor(message: String, cause: Throwable) : super(message, cause)
+    constructor(cause: Throwable) : super(cause)
+    constructor(message: String, cause: Throwable, enableSuppression: Boolean, writableStackTrace: Boolean) : super(
+        message,
+        cause,
+        enableSuppression,
+        writableStackTrace
+    )
+}
