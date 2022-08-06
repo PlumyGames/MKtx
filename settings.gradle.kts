@@ -10,6 +10,7 @@ pluginManagement {
     }
 }
 include(
+    "world",
     "core",
     "texture",
 )

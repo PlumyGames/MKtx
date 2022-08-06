@@ -17,6 +17,7 @@ ___
 |:---------:|:----------:|:---------------------------:|
 |  `core`   |    none    | Basic typealias and utility |
 | `texture` |    none    |       Pixmap process        |
+|  `world`  |    none    |    Entity and Vars.world    |
 
 ### How to use
 
