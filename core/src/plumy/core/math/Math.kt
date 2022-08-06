@@ -11,6 +11,8 @@ val Float.isZero: Boolean
     get() = Mathf.zero(this)
 val Double.isZero: Boolean
     get() = Mathf.zero(this)
+val Float.clamp: Float
+    get() = this.coerceIn(0f, 1f)
 
 operator fun Vec2.component1(): Float = x
 operator fun Vec2.component2(): Float = y
