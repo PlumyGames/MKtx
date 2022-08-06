@@ -1,8 +1,9 @@
 package plumy.texture
 
+import arc.files.Fi
 import arc.graphics.Pixmap
-import arc.graphics.Pixmaps
 import arc.graphics.g2d.PixmapRegion
+import java.io.File
 
 open class PixmapDelegateTexture(val pixmap: Pixmap) : ITexture {
     override fun toPixmap() = pixmap
@@ -22,6 +23,8 @@ class BakedTexture(pixmap: Pixmap) : PixmapDelegateTexture(pixmap) {
     override val disposable = true
 }
 
+fun PixmapTextureFrom(fi: Fi) = RawTexture(fi.toPixmap())
+fun PixmapTextureFrom(file: File) = RawTexture(file.toPixmap())
 class RawTexture(pixmap: Pixmap) : PixmapDelegateTexture(pixmap)
 class ProcessedTexture(pixmap: Pixmap) : PixmapDelegateTexture(pixmap) {
     override val disposable = true

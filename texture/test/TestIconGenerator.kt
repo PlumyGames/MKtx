@@ -21,6 +21,7 @@ class TestIconGenerator {
             },
             (PixmapModelLayerForm(`patch`)) {
                 +TintBlendLayerProcessor(Pal.accent.cpy().a(0.5f))
+                +MonochromeLayerProcessor()
                 +MaskLayerProcessor(AndTextureMask(PixmapTextureFrom(`mask`)))
             }
         )

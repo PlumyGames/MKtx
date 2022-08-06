@@ -58,13 +58,7 @@ value class Pixel(
         }
 
     companion object {
-        /*
-        const val RED_MASK = -0x1000000
-        const val GREEN_MASK = 0x00ff0000
-        const val BLUE_MASK = 0x0000ff00
-        const val ALPHA_MASK = 0x000000ff
-        */
-        const val RED_MASK = -0x1000000
+        const val RED_MASK = -0x1_00_00_00
         const val GREEN_MASK = 0x00_FF_00_00
         const val BLUE_MASK = 0x00_00_FF_00
         const val RGB_MASK = RED_MASK or GREEN_MASK or BLUE_MASK

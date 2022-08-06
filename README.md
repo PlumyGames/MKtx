@@ -13,10 +13,10 @@ ___
 
 ### Modules
 
-|  Name   |         Description         |
-|:-------:|:---------------------------:|
-|  core   | Basic typealias and utility |
-| texture |       Pixmap process        |
+|   Name    | Dependency |         Description         |
+|:---------:|:----------:|:---------------------------:|
+|  `core`   |    none    | Basic typealias and utility |
+| `texture` |    none    |       Pixmap process        |
 
 ### How to use
 
