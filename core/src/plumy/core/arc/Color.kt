@@ -5,6 +5,8 @@ import arc.util.Time
 import plumy.core.math.Progress
 import plumy.core.math.lerp
 
+val EmptyColor = Color()
+
 private val hsvTemp1 = FloatArray(3)
 private val hsvTemp2 = FloatArray(3)
 /**
