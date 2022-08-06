@@ -3,8 +3,12 @@ package plumy.world
 import arc.math.geom.Point2
 import arc.math.geom.Position
 import mindustry.Vars
+import mindustry.core.World
 import mindustry.gen.Building
+import mindustry.gen.Buildingc
+import mindustry.world.Block
 import mindustry.world.Tile
+import kotlin.math.roundToInt
 
 typealias TileXY = Int
 typealias TileXYs = Short
@@ -17,8 +21,18 @@ typealias Pos = Point2
 /**
  * Try to get a building on this packed coordinate.
  */
-inline fun <reified T : Building> PackedPos.castBuild(): T? =
+inline fun <reified T> PackedPos.castBuild(): T? =
     Vars.world.build(this) as? T
+/**
+ * @see [Building.isValid]
+ */
+val Building?.exists: Boolean
+    get() = this != null && this.isValid
+/**
+ * @see [Buildingc.isValid]
+ */
+val Buildingc?.exists: Boolean
+    get() = this != null && this.isValid
 /**
  * Unpack a packed coordinate.
  * @see [Point2.unpack]
@@ -44,6 +58,12 @@ fun buildAt(x: TileXYf, y: TileXYf): Building? =
 
 fun buildAt(x: TileXYd, y: TileXYd): Building? =
     Vars.world.build(x.toInt(), y.toInt())
+
+fun Tile.dstWorld(x: TileXY, y: TileXY): WorldXY =
+    this.dst(x * Vars.tilesize.toFloat(), y * Vars.tilesize.toFloat())
+
+fun Tile.dstWorld2(x: TileXY, y: TileXY): WorldXY =
+    this.dst2(x * Vars.tilesize.toFloat(), y * Vars.tilesize.toFloat())
 /**
  * Try to get a building on this packed coordinate.
  * @see [Point2.unpack]
@@ -71,6 +91,21 @@ val TileXY.worldXY: WorldXY
  */
 val TileXYf.worldXY: WorldXY
     get() = this * Vars.tilesize
+/**
+ * Tile xy to world xy. Take block's offset into account
+ */
+fun Block.getCenterWorldXY(xy: TileXYs): WorldXY =
+    offset + xy * Vars.tilesize
+/**
+ * Tile xy to world xy. Take block's offset into account
+ */
+fun Block.getCenterWorldXY(xy: TileXY): WorldXY =
+    offset + xy * Vars.tilesize
+/**
+ * @see [World.tileWorld]
+ */
+val WorldXY.tileXY: TileXY
+    get() = (this / Vars.tilesize).roundToInt()
 
 fun Position.inTheWorld(): Boolean {
     if (x < -Vars.finalWorldBounds ||
