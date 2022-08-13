@@ -19,6 +19,37 @@ inline fun IntSeq.forEach(func: (Int) -> Unit) {
     }
 }
 /**
+ * @param predicate whether to keep this integer
+ */
+inline fun IntSeq.retain(predicate: (Int) -> Boolean) {
+    for (i in size - 1 downTo 0) {
+        if (!predicate(this[i])) {
+            removeIndex(i)
+        }
+    }
+}
+/**
+ * @param predicate whether to keep this float
+ */
+inline fun FloatSeq.retain(predicate: (Float) -> Boolean) {
+    for (i in size - 1 downTo 0) {
+        if (!predicate(this[i])) {
+            removeIndex(i)
+        }
+    }
+}
+/**
+ * @param predicate whether to keep this element
+ */
+inline fun <T> Seq<T>.retain(predicate: (T) -> Boolean) {
+    val it = iterator()
+    while (it.hasNext()) {
+        if (!predicate(it.next())) {
+            it.remove()
+        }
+    }
+}
+/**
  * Only used in single thread.
  */
 val tempIntSeq = IntSeq(64)
@@ -124,6 +155,7 @@ fun <T> Seq<T>.set(other: Iterable<T>) = apply {
     for (e in other)
         this.add(e)
 }
+
 fun <T> Seq<T>.set(other: Collection<T>) = apply {
     clear()
     for (e in other)
