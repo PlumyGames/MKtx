@@ -211,3 +211,29 @@ fun <T> Seq<T>.removeT(element: T) {
 operator fun <K, V> ObjectMap<K, V>.set(key: K, value: V) {
     this.put(key, value)
 }
+
+fun <T> Array<T>.toSeq() = Seq(this)
+fun <T> Array<T>.toSeq(seq: Seq<T>) = seq.set(this)
+inline fun <reified T> Iterable<T>.toSeq() =
+    Seq<T>(true, 16, T::class.java).apply {
+        clear()
+        addAll(this@toSeq)
+    }
+
+inline fun <reified T> Collection<T>.toSeq() =
+    Seq<T>(true, size, T::class.java).apply {
+        clear()
+        addAll(this@toSeq)
+    }
+
+inline fun <reified T> Iterable<T>.toSeq(seq: Seq<T>) =
+    seq.apply {
+        clear()
+        addAll(this@toSeq)
+    }
+
+inline fun <reified T> Collection<T>.toSeq(seq: Seq<T>) =
+    seq.apply {
+        clear()
+        addAll(this@toSeq)
+    }
