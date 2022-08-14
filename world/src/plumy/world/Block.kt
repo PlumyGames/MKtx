@@ -4,7 +4,7 @@ import mindustry.gen.Building
 import mindustry.world.Block
 
 inline fun <reified B, reified T> Block.config(
-    crossinline onConfig: (B, T) -> Unit,
+    crossinline onConfig: B.(T) -> Unit,
 ) where B : Building {
     when (T::class.java) {
         Int::class.java -> {
