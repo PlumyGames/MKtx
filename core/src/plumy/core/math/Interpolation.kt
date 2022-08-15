@@ -5,12 +5,15 @@ import arc.math.Mathf
 import plumy.core.arc.invoke
 import kotlin.math.min
 
-fun Float.lerp(target: Float, progress: Float): Float =
+/**
+ * @return a number ler from receiver to [target]
+ */
+fun Float.lerp(target: Float, progress: Progress) =
     Mathf.lerp(this, target, progress)
 /**
  * @return self
  */
-fun FloatArray.lerp(target: FloatArray, progress: Float) = this.apply {
+fun FloatArray.lerp(target: FloatArray, progress: Progress) = this.apply {
     for (i in 0 until min(target.size, target.size)) {
         this[i] = this[i].lerp(target[i], progress)
     }
@@ -83,27 +86,30 @@ val Progress.pow3InIntrp: Progress
  * @param maxTime the max bound
  * @return [0f,1f], increasing
  */
-fun progressT(growingTime: Float, maxTime: Float): Float =
+fun progressTime(growingTime: Float, maxTime: Float): Progress =
     1f - ((maxTime - growingTime) / maxTime).coerceIn(0f, 1f)
 /**
  * Return 1f - this
  */
-val Float.reverseProgress: Float
+val Progress.reverseProgress: Progress
     get() = 1f - this
-
 /**
+ * Examples
+ * ```kotlin
+ * 10.inProgress(0.22f) == 2
+ * ```
  * @receiver max
- * @return current progress in [0,max)
+ * @return a number rounded in [0,max)
  */
-fun Int.progress(progress: Progress): Int {
+fun Int.inProgress(progress: Progress): Int {
     val p = progress.coerceIn(0f, 1f)
-    return (p * this).toInt().coerceAtMost(this - 1)
+    return Mathf.round(p * this).coerceAtMost(this - 1)
 }
 /**
  * @receiver the progress in [0f,1f]
  * @param from this value
  * @param to to this value
- * @return a value from [from] to [to] in [progress]
+ * @return a value from [from] to [to] in [inProgress]
  */
 fun Progress.between(from: Float, to: Float): Float {
     if (from > to) {

@@ -16,7 +16,7 @@ typealias TileXYf = Float
 typealias TileXYd = Double
 typealias WorldXY = Float
 typealias PackedPos = Int
-typealias Pos = Point2
+typealias UnpackedPos = Point2
 
 /**
  * Try to get a building on this packed coordinate.
@@ -38,7 +38,7 @@ val Buildingc?.exists: Boolean
  * @see [Point2.unpack]
  * @see [Building.pos]
  */
-fun PackedPos.unpack(): Pos =
+fun PackedPos.unpack(): UnpackedPos =
     Point2.unpack(this)
 
 fun tileAt(x: TileXY, y: TileXY): Tile? =
@@ -74,7 +74,7 @@ val PackedPos.build: Building?
 /**
  * Try to get a building on this coordinate.
  */
-val Pos.build: Building?
+val UnpackedPos.build: Building?
     get() = Vars.world.build(x, y)
 /**
  * Tile coordinate to world coordinate
