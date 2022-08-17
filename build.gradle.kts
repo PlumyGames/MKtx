@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.liplum.mgpp") version "1.1.10"
+    id("io.github.liplum.mgpp") version "1.1.12"
 }
 buildscript {
     repositories {
@@ -31,6 +31,7 @@ allprojects {
     }
 }
 mindustry {
+    isLib = true
     dependency {
         mindustry mirror "1a64344e5a"
         arc on "v137"

@@ -87,7 +87,7 @@ val Progress.pow3InIntrp: Progress
  * @return [0f,1f], increasing
  */
 fun progressTime(growingTime: Float, maxTime: Float): Progress =
-    1f - ((maxTime - growingTime) / maxTime).coerceIn(0f, 1f)
+    (growingTime / maxTime).coerceIn(0f, 1f)
 /**
  * Return 1f - this
  */
