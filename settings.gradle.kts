@@ -3,6 +3,7 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         mavenCentral()
+        mavenLocal()
     }
 
     plugins {
@@ -13,4 +14,5 @@ include(
     "world",
     "core",
     "texture",
+    "animation",
 )
