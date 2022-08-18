@@ -13,11 +13,14 @@ inline fun Turret.drawMulti(
     drawer = DrawMulti(*DrawMultiSpec().apply(config).all.toTypedArray())
 }
 
+inline fun DrawMulti(
+    config: DrawMultiSpec.() -> Unit,
+): DrawMulti = DrawMulti(*DrawMultiSpec().apply(config).all.toTypedArray())
+
 class DrawMultiSpec {
     val all = ArrayList<DrawBlock>()
-    val then = this
-    infix fun add(drawer: DrawBlock) {
-        all += drawer
+    operator fun DrawBlock.unaryPlus() {
+        all += this
     }
 
     inline fun drawTurret(

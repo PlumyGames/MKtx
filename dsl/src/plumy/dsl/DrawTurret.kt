@@ -11,6 +11,10 @@ inline fun Turret.drawTurret(
     this.drawer = DrawTurret().apply(config)
 }
 
+inline fun DrawTurret(
+    config: DrawTurret.() -> Unit,
+) = DrawTurret().apply(config)
+
 inline fun DrawTurret.regionPart(
     suffix: String? = null,
     config: RegionPart.() -> Unit,
