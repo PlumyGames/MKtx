@@ -5,7 +5,10 @@ import arc.graphics.g2d.Draw
 /**
  * Draw anything on a new z-index, and it will turn back after drawing.
  */
-inline fun DrawLayer(layer: Float = Draw.z(), draw: () -> Unit) {
+inline fun DrawLayer(
+    layer: Float = Draw.z(),
+    draw: () -> Unit,
+) {
     val original = Draw.z()
     Draw.z(layer)
     draw()
@@ -14,7 +17,9 @@ inline fun DrawLayer(layer: Float = Draw.z(), draw: () -> Unit) {
 /**
  * Draw anything on new pixel scale, and it will turn back after drawing.
  */
-inline fun DrawScale(draw: () -> Unit) {
+inline fun DrawScale(
+    draw: () -> Unit,
+) {
     val originalXscl = Draw.xscl
     val originalYscl = Draw.yscl
     val originalScl = Draw.scl
