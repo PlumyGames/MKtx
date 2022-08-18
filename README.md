@@ -27,7 +27,8 @@
 |   `core`    |    */*     | Basic typealias and utility |
 |  `texture`  |    */*     |       Pixmap process        |
 |   `world`   |    */*     |    Entity and Vars.world    |
-| `animation` |   `core`   |    Entity and Vars.world    |
+| `animation` |   `core`   |   Animation state machine   |
+|    `dsl`    |    */*     |             DSL             |
 
 </div>
 

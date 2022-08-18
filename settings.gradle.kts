@@ -15,4 +15,5 @@ include(
     "core",
     "texture",
     "animation",
+    "dsl",
 )

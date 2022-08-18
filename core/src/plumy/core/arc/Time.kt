@@ -1,20 +1,24 @@
 package plumy.core.arc
 
-typealias Tick = Float
-typealias TickI = Int
-typealias TickD = Double
-typealias Second = Float
-typealias Minute = Float
+import arc.util.Time
 
-val Tick.second
+typealias Tick = Float
+
+// Time to tick
+val Float.second: Tick
     get() = this * 60f
-val Tick.minute
+val Float.minute: Tick
     get() = this * 60f * 60f
-val TickI.second
+val Int.second: Tick
     get() = this * 60f
-val TickI.minute
+val Int.minute: Tick
     get() = this * 60f * 60f
-val TickD.second: Float
+val Double.second: Float
     get() = (this * 60f).toFloat()
-val TickD.minute: Float
+val Double.minute: Float
     get() = (this * 60f * 60f).toFloat()
+// Tick to second
+val Tick.toSecondf: Float
+    get() = this / Time.toSeconds
+val Tick.toSecond: Int
+    get() = (this / Time.toSeconds).toInt()
