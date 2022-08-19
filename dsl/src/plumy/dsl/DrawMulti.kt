@@ -1,13 +1,19 @@
 package plumy.dsl
 
 import mindustry.world.blocks.defense.turrets.Turret
+import mindustry.world.blocks.production.GenericCrafter
 import mindustry.world.draw.DrawBlock
 import mindustry.world.draw.DrawMulti
 import mindustry.world.draw.DrawRegion
 import mindustry.world.draw.DrawTurret
 
-// DrawMulti
 inline fun Turret.drawMulti(
+    config: DrawMultiSpec.() -> Unit,
+) {
+    drawer = DrawMulti(*DrawMultiSpec().apply(config).all.toTypedArray())
+}
+
+inline fun GenericCrafter.drawMulti(
     config: DrawMultiSpec.() -> Unit,
 ) {
     drawer = DrawMulti(*DrawMultiSpec().apply(config).all.toTypedArray())

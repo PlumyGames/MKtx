@@ -1,9 +1,10 @@
 package plumy.core
 
+import mindustry.Vars
 import java.lang.annotation.Inherited
 
 /**
- * It indicates this property/field should be serialized into save or datapack.
+ * It indicates this property/field should be serialized into save or a datapack.
  */
 @Retention(AnnotationRetention.SOURCE)
 @Inherited
@@ -11,43 +12,35 @@ import java.lang.annotation.Inherited
 @Target(AnnotationTarget.PROPERTY, AnnotationTarget.FIELD)
 annotation class Serialized
 /**
- * It indicates this function use random number which may not be synchronized on Physical Server between Physical Client
- * so that you have to send data packet manually to share data.
- */
-@Retention(AnnotationRetention.SOURCE)
-@Inherited
-@MustBeDocumented
-annotation class UseRandom
-/**
- * It indicates reflection is used there. Please pay attention to the API changes between versions.
- */
-@Target(
-    AnnotationTarget.FUNCTION,
-    AnnotationTarget.PROPERTY_SETTER,
-    AnnotationTarget.PROPERTY_GETTER,
-    AnnotationTarget.CONSTRUCTOR,
-    AnnotationTarget.PROPERTY,
-    AnnotationTarget.EXPRESSION,
-    AnnotationTarget.LOCAL_VARIABLE,
-)
-@Retention(AnnotationRetention.SOURCE)
-@MustBeDocumented
-annotation class UseReflection
-/**
- * It indicates a function is idempotent
- */
-@Target(AnnotationTarget.FUNCTION)
-@Retention(AnnotationRetention.SOURCE)
-@MustBeDocumented
-annotation class Idempotent
-/**
  * It indicates this parameter is used to output something.
- * ## Use case:
- * 1. For mutable object: fun reflect(@Out out:Vec2)
- * This function should set any field of `out` vector
- * 2. When it's used on extension function, the receiver is the output
+ * ```kotlin
+ * fun getFace(@Out v:Vec2)
+ * ```
  */
 @Retention(AnnotationRetention.SOURCE)
 @Target(AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.FUNCTION)
 @MustBeDocumented
 annotation class Out
+
+/**
+ * It indicates this should be called or accessed only when [Vars.headless] is false.
+ * ## Use case
+ * 1. On a property or field, you shouldn't access them, it may provide wrong data or even crash the game.
+ * 2. On a function, you shouldn't call them, it could crash the game.
+ * 3. On a class or object, the class loader mustn't load them, probably because static initialization could crash the game.
+ */
+@Retention(AnnotationRetention.SOURCE)
+@MustBeDocumented
+annotation class ClientOnly
+
+/**
+ * It indicates this should be called or accessed only when [Vars.headless] is true.
+ * ## Use case
+ * 1. On a property or field, you shouldn't access them, it may provide wrong data or even crash the game.
+ * 2. On a function, you shouldn't call them, it could crash the game.
+ * 3. On a class or object, the class loader mustn't load them, probably because static initialization could crash the game.
+ */
+@Retention(AnnotationRetention.SOURCE)
+@Inherited
+@MustBeDocumented
+annotation class HeadlessOnly

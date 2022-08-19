@@ -2,9 +2,9 @@ package plumy.core.math
 
 import arc.math.Interp
 import arc.math.Mathf
-import plumy.core.arc.invoke
 import kotlin.math.min
 
+operator fun Interp.invoke(x: Float) = this.apply(x)
 /**
  * @return a number ler from receiver to [target]
  */
