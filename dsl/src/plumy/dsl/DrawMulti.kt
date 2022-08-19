@@ -1,23 +1,13 @@
 package plumy.dsl
 
 import mindustry.world.blocks.defense.turrets.Turret
+import mindustry.world.blocks.power.PowerGenerator
 import mindustry.world.blocks.production.GenericCrafter
+import mindustry.world.blocks.production.Pump
 import mindustry.world.draw.DrawBlock
 import mindustry.world.draw.DrawMulti
 import mindustry.world.draw.DrawRegion
 import mindustry.world.draw.DrawTurret
-
-inline fun Turret.drawMulti(
-    config: DrawMultiSpec.() -> Unit,
-) {
-    drawer = DrawMulti(*DrawMultiSpec().apply(config).all.toTypedArray())
-}
-
-inline fun GenericCrafter.drawMulti(
-    config: DrawMultiSpec.() -> Unit,
-) {
-    drawer = DrawMulti(*DrawMultiSpec().apply(config).all.toTypedArray())
-}
 
 inline fun DrawMulti(
     config: DrawMultiSpec.() -> Unit,
@@ -41,4 +31,29 @@ class DrawMultiSpec {
     ) {
         all += DrawRegion(suffix).apply(config)
     }
+}
+
+// DSL
+inline fun Turret.drawMulti(
+    config: DrawMultiSpec.() -> Unit,
+) {
+    drawer = DrawMulti(*DrawMultiSpec().apply(config).all.toTypedArray())
+}
+
+inline fun GenericCrafter.drawMulti(
+    config: DrawMultiSpec.() -> Unit,
+) {
+    drawer = DrawMulti(*DrawMultiSpec().apply(config).all.toTypedArray())
+}
+
+inline fun Pump.drawMulti(
+    config: DrawMultiSpec.() -> Unit,
+) {
+    drawer = DrawMulti(*DrawMultiSpec().apply(config).all.toTypedArray())
+}
+
+inline fun PowerGenerator.drawMulti(
+    config: DrawMultiSpec.() -> Unit,
+) {
+    drawer = DrawMulti(*DrawMultiSpec().apply(config).all.toTypedArray())
 }
