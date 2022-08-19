@@ -1,4 +1,4 @@
-package plumy.world
+package plumy.dsl
 
 import arc.graphics.Color
 import mindustry.gen.Building

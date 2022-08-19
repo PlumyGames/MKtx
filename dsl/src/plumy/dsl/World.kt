@@ -1,4 +1,4 @@
-package plumy.world
+package plumy.dsl
 
 import arc.math.geom.Point2
 import arc.math.geom.Position
@@ -24,6 +24,11 @@ typealias UnpackedPos = Point2
 inline fun <reified T> PackedPos.castBuild(): T? =
     Vars.world.build(this) as? T
 /**
+ * Try to get a building on this unpacked coordinate.
+ */
+inline fun <reified T> UnpackedPos.castBuild(): T? =
+    Vars.world.build(x, y) as? T
+/**
  * @see [Building.isValid]
  */
 val Building?.exists: Boolean
@@ -40,25 +45,14 @@ val Buildingc?.exists: Boolean
  */
 fun PackedPos.unpack(): UnpackedPos =
     Point2.unpack(this)
-
-fun tileAt(x: TileXY, y: TileXY): Tile? =
-    Vars.world.tile(x, y)
-
-fun tileAt(x: TileXYf, y: TileXYf): Tile? =
-    Vars.world.tile(x.toInt(), y.toInt())
-
-fun tileAt(x: TileXYd, y: TileXYd): Tile? =
-    Vars.world.tile(x.toInt(), y.toInt())
-
-fun buildAt(x: TileXY, y: TileXY): Building? =
-    Vars.world.build(x, y)
-
-fun buildAt(x: TileXYf, y: TileXYf): Building? =
-    Vars.world.build(x.toInt(), y.toInt())
-
-fun buildAt(x: TileXYd, y: TileXYd): Building? =
-    Vars.world.build(x.toInt(), y.toInt())
-
+// tile
+fun World.tile(x: Float, y: Float): Tile? = tile(x.toInt(), y.toInt())
+fun World.tile(x: TileXYd, y: TileXYd): Tile? = tile(x.toInt(), y.toInt())
+fun World.tile(x: TileXYs, y: TileXYs): Tile? = tile(x.toInt(), y.toInt())
+// build
+fun World.build(x: TileXYf, y: TileXYf): Building? = build(x.toInt(), y.toInt())
+fun World.build(x: TileXYd, y: TileXYd): Building? = build(x.toInt(), y.toInt())
+fun World.build(x: TileXYs, y: TileXYs): Tile? = tile(x.toInt(), y.toInt())
 fun Tile.dstWorld(x: TileXY, y: TileXY): WorldXY =
     this.dst(x * Vars.tilesize.toFloat(), y * Vars.tilesize.toFloat())
 

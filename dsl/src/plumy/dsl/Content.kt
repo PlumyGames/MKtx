@@ -1,4 +1,4 @@
-package plumy.world
+package plumy.dsl
 
 import mindustry.ctype.Content
 

@@ -16,7 +16,7 @@ inline fun DrawTurret(
 ) = DrawTurret().apply(config)
 
 inline fun DrawTurret.regionPart(
-    suffix: String? = null,
+    suffix: String = "",
     config: RegionPart.() -> Unit,
 ) {
     parts.add(RegionPart(suffix).apply(config))

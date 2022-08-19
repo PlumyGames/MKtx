@@ -26,7 +26,7 @@
 |:-----------:|:----------:|:---------------------------:|
 |   `core`    |    */*     | Basic typealias and utility |
 |  `texture`  |    */*     |       Pixmap process        |
-|   `world`   |    */*     |    Entity and Vars.world    |
+|   `world`   |    */*     |           Entity            |
 | `animation` |   `core`   |   Animation state machine   |
 |    `dsl`    |    */*     |             DSL             |
 
