@@ -5,7 +5,7 @@ package plumy.animation.state
 import arc.math.Interp
 import arc.math.Mathf
 import plumy.animation.ContextDraw.ALPHA
-import plumy.core.arc.invoke
+import plumy.core.math.invoke
 
 typealias TransitionEffect = (Float, () -> Unit, () -> Unit) -> Unit
 
