@@ -18,6 +18,12 @@ fun FloatArray.lerp(target: FloatArray, progress: Progress) = this.apply {
         this[i] = this[i].lerp(target[i], progress)
     }
 }
+
+fun Float.approach(to: Float, speed: Float) =
+    Mathf.approach(this, to, speed)
+
+fun Float.approachDelta(to: Float, speed: Float) =
+    Mathf.approachDelta(this, to, speed)
 /**
  * Return the smooth interpolation.
  * @receiver any number, finally is coerced in [0f,1f]
