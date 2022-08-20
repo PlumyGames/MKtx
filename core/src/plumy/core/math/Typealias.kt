@@ -13,7 +13,3 @@ typealias Degree = Float
 typealias Radian = Float
 typealias Radius = Float
 typealias Percentage = Float
-/**
- * To solve the name conflict of [Unit] in Kotlin.
- */
-typealias MUnit = mindustry.gen.Unit
