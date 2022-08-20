@@ -15,13 +15,6 @@ inline fun DrawTurret(
     config: DrawTurret.() -> Unit,
 ) = DrawTurret().apply(config)
 
-inline fun DrawTurret.regionPart(
-    suffix: String = "",
-    config: RegionPart.() -> Unit,
-) {
-    parts.add(RegionPart(suffix).apply(config))
-}
-
 fun RegionPart.addMove(
     progress: PartProgress = PartProgress.warmup,
     x: Float = 0f,
@@ -29,6 +22,13 @@ fun RegionPart.addMove(
     rot: Float = 0f,
 ) {
     moves.add(DrawPart.PartMove(progress, x, y, rot))
+}
+// DrawTurret
+inline fun DrawTurret.regionPart(
+    suffix: String = "",
+    config: RegionPart.() -> Unit,
+) {
+    parts.add(RegionPart(suffix).apply(config))
 }
 
 inline fun DrawTurret.shapePart(
@@ -53,4 +53,35 @@ inline fun DrawTurret.haloPart(
     config: HaloPart.() -> Unit,
 ) {
     parts.add(HaloPart().apply(config))
+}
+// RegionPart's children
+inline fun RegionPart.regionPart(
+    suffix: String = "",
+    config: RegionPart.() -> Unit,
+) {
+    children.add(RegionPart(suffix).apply(config))
+}
+
+inline fun RegionPart.shapePart(
+    config: ShapePart.() -> Unit,
+) {
+    children.add(ShapePart().apply(config))
+}
+
+inline fun RegionPart.flarePart(
+    config: FlarePart.() -> Unit,
+) {
+    children.add(FlarePart().apply(config))
+}
+
+inline fun RegionPart.hoverPart(
+    config: HoverPart.() -> Unit,
+) {
+    children.add(HoverPart().apply(config))
+}
+
+inline fun RegionPart.haloPart(
+    config: HaloPart.() -> Unit,
+) {
+    children.add(HaloPart().apply(config))
 }
