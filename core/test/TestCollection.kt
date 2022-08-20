@@ -1,5 +1,7 @@
 import arc.struct.IntSeq
+import arc.struct.Seq
 import org.junit.jupiter.api.Test
+import plumy.core.arc.forLoop
 import plumy.core.arc.retain
 
 class TestCollection {
@@ -26,5 +28,12 @@ class TestCollection {
             it in 4..6
         }
         println(seq)
+    }
+
+    @Test
+    fun `test foreach`(){
+        Seq<Any>().forLoop {
+
+        }
     }
 }
