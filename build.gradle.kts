@@ -33,14 +33,14 @@ allprojects {
 mindustry {
     isLib = true
     dependency {
-        mindustry mirror "1a64344e5a"
-        arc on "v137"
+        mindustry mirror "v139"
+        arc on "v139"
     }
     client {
-        mindustry official "v137"
+        mindustry official "v139"
     }
     server {
-        mindustry official "v137"
+        mindustry official "v139"
     }
     deploy {
         noFatJar

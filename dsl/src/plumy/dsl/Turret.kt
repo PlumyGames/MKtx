@@ -6,6 +6,7 @@ import mindustry.type.Liquid
 import mindustry.world.blocks.defense.turrets.ContinuousLiquidTurret
 import mindustry.world.blocks.defense.turrets.ItemTurret
 import mindustry.world.blocks.defense.turrets.LiquidTurret
+import mindustry.world.blocks.defense.turrets.Turret
 
 fun ItemTurret.addAmmo(
     item: Item, bullet: BulletType,
@@ -42,3 +43,20 @@ fun ContinuousLiquidTurret.removeAmmo(
 ) {
     ammoTypes.remove(fluid)
 }
+
+
+/**
+ * the same as [Turret.TurretBuild.drawrot]
+ */
+val Turret.TurretBuild.drawRot: Float
+    get() = rotation - 90f
+/**
+ * Respect the [Turret.TurretBuild.recoilOffset]
+ */
+val Turret.TurretBuild.drawX: Float
+    get() = x + recoilOffset.x
+/**
+ * Respect the [Turret.TurretBuild.recoilOffset]
+ */
+val Turret.TurretBuild.drawY: Float
+    get() = y + recoilOffset.y
