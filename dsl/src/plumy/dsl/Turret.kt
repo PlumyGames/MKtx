@@ -49,7 +49,7 @@ fun ContinuousLiquidTurret.removeAmmo(
  * the same as [Turret.TurretBuild.drawrot]
  */
 val Turret.TurretBuild.drawRot: Float
-    get() = rotation - 90f
+    get() = drawrot()
 /**
  * Respect the [Turret.TurretBuild.recoilOffset]
  */
