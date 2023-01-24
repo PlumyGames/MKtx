@@ -19,7 +19,7 @@ class StackIconBakery(
     }
 }
 
-fun LayerBuffer.coverBy(cover: LayerBuffer) {
+fun ILayerView.coverBy(cover: ILayerView) {
     val width = min(this.width, cover.width)
     val height = min(this.height, cover.height)
     val baseT = Color()
@@ -38,7 +38,7 @@ class MonochromeLayerProcessor(
     val greenProportion: Float = 0.7154f,
     val blueProportion: Float = 0.0721f,
 ) : ILayerProcessor {
-    override fun process(original: LayerBuffer): LayerBuffer {
+    override fun process(original: ILayerView): ILayerView {
         val width = original.width
         val height = original.height
         val cur = Color()
@@ -62,7 +62,7 @@ class TintBlendLayerProcessor(
 ) : ILayerProcessor {
     constructor(color: Color) : this(color.toPixel())
 
-    override fun process(original: LayerBuffer): LayerBuffer {
+    override fun process(original: ILayerView): ILayerView {
         val width = original.width
         val height = original.height
         for (x in 0 until width) {
@@ -81,7 +81,7 @@ class TintLerpLayerProcessor(
     val color: Color,
     val progress: Float,
 ) : ILayerProcessor {
-    override fun process(original: LayerBuffer): LayerBuffer {
+    override fun process(original: ILayerView): ILayerView {
         val width = original.width
         val height = original.height
         val cur = Color()
@@ -101,10 +101,10 @@ class TintLerpLayerProcessor(
 class MaskLayerProcessor(
     val mask: IMask,
 ) : ILayerProcessor {
-    override fun process(original: LayerBuffer): LayerBuffer {
+    override fun process(original: ILayerView): ILayerView {
         val width = original.width
         val height = original.height
-        val res = original.copy()
+        val res = original.recreateBuffer()
         for (x in 0 until width) {
             for (y in 0 until height) {
                 mask.draw(on = res, x, y, color = original[x, y])
@@ -118,7 +118,7 @@ class OffsetLayerProcessor(
     val x: Int,
     val y: Int,
 ) : ILayerProcessor {
-    override fun process(original: LayerBuffer): LayerBuffer {
+    override fun process(original: ILayerView): ILayerView {
         TODO("Not yet implemented")
     }
 }

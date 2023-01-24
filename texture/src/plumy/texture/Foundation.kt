@@ -4,22 +4,62 @@ import arc.graphics.Pixmap
 import arc.graphics.g2d.PixmapRegion
 import kotlin.math.min
 
+interface ILayerView {
+    val width: Int
+    val height: Int
+    operator fun get(x: Int, y: Int): Int
+    operator fun set(x: Int, y: Int, rgba8888: Int)
+    fun recreateBuffer(): LayerBuffer {
+        val buffer = LayerBuffer(width, height)
+        for (x in 0 until width) {
+            for (y in 0 until height) {
+                buffer[x, y] = this[x, y]
+            }
+        }
+        return buffer
+    }
+}
+
 class LayerBuffer private constructor(
-    val width: Int,
-    val height: Int,
+    override val width: Int,
+    override val height: Int,
     val pixels: IntArray,
-) {
+) : ILayerView {
     constructor(
         maxX: Int, maxY: Int
     ) : this(maxX, maxY, IntArray(maxX * maxY))
 
-    operator fun get(x: Int, y: Int): Int = pixels[x + y * width]
-    operator fun set(x: Int, y: Int, rgba8888: Int) {
+    override operator fun get(x: Int, y: Int): Int = pixels[x + y * width]
+    override operator fun set(x: Int, y: Int, rgba8888: Int) {
         pixels[x + y * width] = rgba8888
     }
 
-    fun copy() = LayerBuffer(width, height, pixels.copyOf())
+    override fun recreateBuffer() = LayerBuffer(width, height, pixels.copyOf())
 }
+
+class PixmapLayerViewWrapper(val pixmap: Pixmap) : ILayerView {
+    override val width: Int = pixmap.width
+    override val height: Int = pixmap.height
+    override fun get(x: Int, y: Int): Int = pixmap[x, y]
+
+    override fun set(x: Int, y: Int, rgba8888: Int) {
+        pixmap[x, y] = rgba8888
+    }
+}
+
+fun Pixmap.toLayerView() = PixmapLayerViewWrapper(this)
+
+class PixmapRegionLayerViewWrapper(val pixmap: PixmapRegion) : ILayerView {
+    override val width: Int = pixmap.width
+    override val height: Int = pixmap.height
+    override fun get(x: Int, y: Int): Int = pixmap[x, y]
+
+    override fun set(x: Int, y: Int, rgba8888: Int) {
+        throw NotImplementedError("${PixmapRegion::class.simpleName} can't be set.")
+    }
+}
+
+fun PixmapRegion.toLayerView() = PixmapRegionLayerViewWrapper(this)
 
 /**
  * It will create a [Pixmap] whose lifecycle should be handled by users.
@@ -70,7 +110,7 @@ fun PixmapRegion.toLayerBuffer(): LayerBuffer {
 
 
 interface ILayer {
-    fun process(): LayerBuffer
+    fun process(): ILayerView
 }
 
 interface ILayerProcessor {
@@ -78,7 +118,7 @@ interface ILayerProcessor {
      * Process [original] layer.
      * @return the processed result. It can be the same object as [original].
      */
-    fun process(original: LayerBuffer): LayerBuffer
+    fun process(original: ILayerView): ILayerView
 }
 
 interface IBakery {
@@ -105,8 +145,8 @@ class Layer(val raw: LayerBuffer) : ILayer {
         processors.remove(processor)
     }
 
-    override fun process(): LayerBuffer {
-        var cur = raw
+    override fun process(): ILayerView {
+        var cur: ILayerView = raw
         for (processor in processors) {
             cur = processor.process(cur)
         }
