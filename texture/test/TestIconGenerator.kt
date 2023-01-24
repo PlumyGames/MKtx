@@ -14,19 +14,16 @@ class TestIconGenerator {
     val `patch` = rootDir.resolve("patch.png")
     val `mask` = rootDir.resolve("mask.png")
     fun `gen icon`(): Pixmap {
-        val maker = StackIconMaker(32, 32)
-        val layers = listOf(
-            (PixmapModelLayerForm(`base`)) {
-                +PlainLayerProcessor()
-            },
-            (PixmapModelLayerForm(`patch`)) {
+        val maker = StackIconBakery(32, 32)
+        val baked = maker.bake(
+            Layer(`base`.readAsPixmap().toLayerBuffer()),
+            Layer(`patch`.readAsPixmap().toLayerBuffer()) {
                 +TintLerpLayerProcessor(Pal.accent, progress = 0.5f)
                 +MonochromeLayerProcessor()
-                +MaskLayerProcessor(AndTextureMask(PixmapTextureFrom(`mask`)))
+                +MaskLayerProcessor(AndTextureMask(`mask`.readAsPixmap().toLayerBuffer()))
             }
         )
-        val baked = maker.bake(layers)
-        return baked.texture.toPixmap()
+        return baked.createPixmap()
     }
     @Test
     fun `test gen icon`() {
