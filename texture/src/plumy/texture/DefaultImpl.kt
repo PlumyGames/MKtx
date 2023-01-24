@@ -115,10 +115,22 @@ class MaskLayerProcessor(
 }
 
 class OffsetLayerProcessor(
-    val x: Int,
-    val y: Int,
+    val dx: Int,
+    val dy: Int,
 ) : ILayerProcessor {
     override fun process(original: ILayerView): ILayerView {
-        TODO("Not yet implemented")
+        val width = original.width
+        val height = original.height
+        val res = original.recreateBuffer()
+        for (x in 0 until width) {
+            for (y in 0 until height) {
+                val targetX = x + dx
+                val targetY = x + dy
+                if (targetX in 0 until res.width && targetY in 0 until res.height) {
+                    res[targetX, targetY] = original[x, x]
+                }
+            }
+        }
+        return res
     }
 }
