@@ -9,17 +9,20 @@ class StackIconBakery(
     val width: Int,
     val height: Int,
 ) : IBakery {
-    val postProcessor = mutableListOf<ILayerProcessor>()
+    /**
+     * Process the baked imaged.
+     */
+    val postProcessors = mutableListOf<ILayerProcessor>()
     override fun bake(layers: List<ILayer>): LayerBuffer {
-        val merged = LayerBuffer(width, height)
+        val baked = LayerBuffer(width, height)
         for (layer in layers) {
             layer.process().let {
-                merged.coverBy(it)
+                baked.coverBy(it)
             }
         }
-        var res: ILayerView = merged
-        for (processor in postProcessor) {
-            res = processor.process(merged)
+        var res: ILayerView = baked
+        for (processor in postProcessors) {
+            res = processor.process(baked)
         }
         return if (res is LayerBuffer) res else res.recreateBuffer()
     }
