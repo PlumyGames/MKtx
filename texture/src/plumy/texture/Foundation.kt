@@ -158,11 +158,6 @@ operator fun Layer.plusAssign(processor: ILayerProcessor) {
     this.addProcess(processor)
 }
 
-operator fun Layer.plus(processor: ILayerProcessor): Layer {
-    this.addProcess(processor)
-    return this
-}
-
 inline operator fun Layer.invoke(config: LayerSpec.() -> Unit): Layer {
     LayerSpec(this).config()
     return this
