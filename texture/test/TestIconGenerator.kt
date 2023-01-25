@@ -21,6 +21,7 @@ class TestIconGenerator {
                 +TintLerpLayerProcessor(Pal.accent, progress = 0.5f)
                 +MonochromeLayerProcessor()
                 +MaskLayerProcessor(AndTextureMask(`mask`.readAsPixmap().toLayerBuffer()))
+                +AntiAliasingLayerProcessor
             }
         )
         return baked.createPixmap()
