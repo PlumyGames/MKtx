@@ -43,7 +43,9 @@ inline fun CreateTechTree(
     root.icon = icon
     root.name = name
     root.planet = planet
-    root.researchCostMultipliers = researchCostMultipliers
+    if (researchCostMultipliers != null) {
+        root.researchCostMultipliers = researchCostMultipliers
+    }
     root.requiresUnlock = requireUnlock
     TechTree.roots.add(root)
     val declaration = TechNodeSpec(root)
@@ -91,7 +93,9 @@ value class TechNodeSpec(
         }
         child.objectives.addAll(objectiveReq)
         child.icon = icon
-        child.researchCostMultipliers = researchCostMultipliers
+        if (researchCostMultipliers != null) {
+            child.researchCostMultipliers = researchCostMultipliers
+        }
         TechNodeSpec(child).genChild()
         return child
     }
