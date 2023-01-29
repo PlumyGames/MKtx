@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.liplum.mgpp") version "1.1.12"
+    id("io.github.liplum.mgpp") version "1.2.0"
 }
 buildscript {
     repositories {

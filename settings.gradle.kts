@@ -1,4 +1,4 @@
-rootProject.name = "mkutils"
+rootProject.name = "mktx"
 pluginManagement {
     repositories {
         gradlePluginPortal()

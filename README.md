@@ -1,26 +1,17 @@
-<br>
-
 <div align = center>
+
+# MKtx
+
+**K**o**t**lin E**x**tension for **M**industry
 
 [![Badge Discord]][Discord]
 [![Badge License]][License]
 
-<br>
-
-# MK Utils
-
-*Mindustry Kotlin Utils*
-
-<br>
-
 [![Badge Jitpack]][Jitpack]
 
-<br>
-<br>
+</div>
 
 ## Modules
-
-<br>
 
 |    Name     | Dependency |         Description         |
 |:-----------:|:----------:|:---------------------------:|
@@ -30,14 +21,7 @@
 | `animation` |   `core`   |   Animation state machine   |
 |    `dsl`    |    */*     |             DSL             |
 
-</div>
-
-<br>
-<br>
-
 ## Usage
-
-<br>
 
 1. Add the **JitPack** repository to your `build.gradle.kts`
 
@@ -53,7 +37,7 @@
 
     ```Kotlin
      dependencies {
-        implementation("com.github.plumygame:mkutils:<module>:<version>")
+        implementation("com.github.plumygames:mktx:<module>:<version>")
     }
     ```
 
@@ -62,7 +46,7 @@
 
 <!----------------------------------------------------------------------------->
 
-[Jitpack]: https://jitpack.io/#plumygame/mkutils
+[Jitpack]: https://jitpack.io/#plumygames/mktx
 
 [Discord]: https://discord.gg/PDwyxM3waw
 
@@ -75,4 +59,4 @@
 
 [Badge License]: https://img.shields.io/badge/License-GPL3-015d93.svg?style=for-the-badge&labelColor=blue&logoColor=white&logo=GNU
 
-[Badge Jitpack]: https://jitpack.io/v/plumygame/mkutils.svg?style=flat
+[Badge Jitpack]: https://jitpack.io/v/plumygames/mkutils.svg?style=flat
