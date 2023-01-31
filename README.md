@@ -59,4 +59,4 @@
 
 [Badge License]: https://img.shields.io/badge/License-GPL3-015d93.svg?style=for-the-badge&labelColor=blue&logoColor=white&logo=GNU
 
-[Badge Jitpack]: https://jitpack.io/v/plumygames/mkutils.svg?style=flat
+[Badge Jitpack]: https://jitpack.io/v/plumygames/mktx.svg?style=flat
